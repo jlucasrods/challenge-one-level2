@@ -1,6 +1,5 @@
 # STS
 venv/
-.env
 **/__pycache__/
 
 # PyCharm
