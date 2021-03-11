@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 DB_URL: str = os.getenv('DB_URL')
 if not DB_URL:
@@ -7,3 +8,6 @@ if not DB_URL:
 AUTH_SECRET: str = os.getenv('AUTH_SECRET')
 if not AUTH_SECRET:
     raise Exception('AUTH_SECRET environment variable is not defined')
+
+CORS_ORIGINS: List[str] = os.getenv('CORS_ORIGINS', '').split(',')
+
