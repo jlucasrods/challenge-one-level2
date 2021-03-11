@@ -24,15 +24,17 @@ class UserBase(BaseModel):
 
     @validator("cpf")
     def cpf_should_contain_11_numbers(cls, cpf):
-        if not re.match(r"^[0-9]{11}$", cpf):
+        clean_cpf = re.sub("[^0-9]", "", cpf)
+        if len(clean_cpf) != 11 :
             raise ValueError("CPF must contain 11 numbers")
-        return cpf
+        return clean_cpf
 
     @validator("pis")
     def pis_should_be_valid(cls, pis):
-        if not pis_validator.validate(pis):
+        clean_pis = re.sub("[^0-9]", "", pis)
+        if len(clean_pis) != 11 :
             raise ValueError("PIS must be valid")
-        return pis
+        return clean_pis
 
     @validator("pis")
     def pis_should_contain_11_numbers(cls, pis):
