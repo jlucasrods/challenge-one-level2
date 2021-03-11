@@ -35,9 +35,19 @@ export default function SignUpPage() {
           <Form.Column>
             <Form.Input type="text" name="name" placeholder="Nome" required />
             <Form.Input type="email" name="email" placeholder="Email" required />
-            <Form.Input type="number" name="cpf" placeholder="CPF (somente números)" maxlength="11" min="0" required />
-            <Form.Input type="number" name="pis" placeholder="PIS (somente números)" maxlength="11" min="0" required />
-            <Form.Input type="password" name="password" placeholder="Senha" autocomplete="off" required />
+            <Form.Input.Cleave name="cpf" placeholder="CPF" required options={{ 
+              blocks: [3, 3, 3, 2], 
+              delimiters: ['.', '.', '-'],
+              numericOnly: true
+              }}
+            />
+            <Form.Input.Cleave name="pis" placeholder="PIS" required options={{ 
+              blocks: [3, 5, 2, 1], 
+              delimiters: ['.', '.', '-'],
+              numericOnly: true
+              }}
+            />
+            <Form.Input type="password" name="password" placeholder="Senha" autoComplete="off" required />
           </Form.Column>
           <Form.Column>
             <Form.Input type="text" name="address.country" placeholder="País" required />

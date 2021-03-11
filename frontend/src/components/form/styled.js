@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import Cleave from 'cleave.js/react';
 
 export const Form = styled.form`
   display: flex;
@@ -13,12 +14,20 @@ Form.Column = styled.div`
   margin-left: 10px;
 `;
 
-Form.Input = styled.input`
+const fieldCss = css`
   margin-top: 5px;
   margin-bottom: 5px;
   padding: 5px 8px;
   border: solid 1px #CCCCCC;
   font-size: 20px;
+`;
+
+Form.Input = styled.input`
+  ${fieldCss}
+`;
+
+Form.Input.Cleave = styled(Cleave)`
+  ${fieldCss}
 `;
 
 Form.Button = styled.button`

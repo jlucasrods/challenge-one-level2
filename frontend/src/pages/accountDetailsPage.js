@@ -4,7 +4,7 @@ import Widget from '../components/widget';
 import Form from '../components/form';
 import serializeForm from '../helpers/serializeForm';
 import { getCurrentUser, removeToken, getClaims, getAuthorizationHeader } from '../helpers/auth';
-
+import { extractRequestErrorMsg } from '../helpers/handleRequest';
 
 export default function AccountDetailsPage() {
   const [alert, setAlert] = useState();
@@ -50,7 +50,7 @@ export default function AccountDetailsPage() {
     const body = await response.json();
     
     if(response.status !== 200) {
-      setAlert(JSON.stringify(body))
+      setAlert(extractRequestErrorMsg(body));
     }
   }
 
@@ -63,8 +63,22 @@ export default function AccountDetailsPage() {
             <Form.Column>
               <Form.Input type="text" name="name" placeholder="Nome" required defaultValue={user.name} />
               <Form.Input type="email" name="email" placeholder="Email" required defaultValue={user.email} />
-              <Form.Input type="number" name="cpf" placeholder="CPF (somente números)" maxlength="11" min="0" required defaultValue={user.cpf} />
-              <Form.Input type="number" name="pis" placeholder="PIS (somente números)" maxlength="11" min="0" required defaultValue={user.pis}/>
+              <Form.Input.Cleave name="cpf"  placeholder="CPF" required 
+                value={user.cpf} 
+                options={{ 
+                  blocks: [3, 3, 3, 2], 
+                  delimiters: ['.', '.', '-'],
+                  numericOnly: true
+                }}
+              />
+              <Form.Input.Cleave name="pis" placeholder="PIS" required
+                value={user.pis} 
+                options={{ 
+                  blocks: [3, 5, 2, 1], 
+                  delimiters: ['.', '.', '-'],
+                  numericOnly: true,
+                }}
+              />
               <Form.Input type="password" name="password" placeholder="Senha" autocomplete="off" required  />
             </Form.Column>
             <Form.Column>
