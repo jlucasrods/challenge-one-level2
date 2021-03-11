@@ -23,7 +23,7 @@ def create_token(user_id: int) -> str:
 
 
 def verify_auth(db: Session = Depends(get_db), auth: str = Depends(oauth2_scheme)) -> UserModel:
-    unauthorized_exception = HTTPException(detail='Invalid token', status_code=400)
+    unauthorized_exception = HTTPException(detail='Invalid token', status_code=401)
     try:
         payload = jwt.decode(auth, AUTH_SECRET, algorithms=[ALGORITHM])
         user_id = payload.get('sub')

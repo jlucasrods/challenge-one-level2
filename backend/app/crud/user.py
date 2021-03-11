@@ -40,7 +40,7 @@ def update(db: Session, user_model: UserModel, user_update: UserUpdate) -> UserM
     user_model.email = user_update.email
     user_model.cpf = user_update.cpf
     user_model.pis = user_update.pis
-    user_model.password = hash_password(user_update.password)
+    user_model.password = hash_password(user_update.newPassword if user_update.newPassword else user_update.oldPassword)
     user_model.address.country = user_update.address.country,
     user_model.address.state = user_update.address.state,
     user_model.address.city = user_update.address.city,

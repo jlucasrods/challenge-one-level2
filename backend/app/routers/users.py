@@ -2,6 +2,7 @@ from fastapi import HTTPException, APIRouter, Response, Depends
 
 from app.config.auth import verify_auth
 from app.config.db import get_db
+from app.config.pass_hashing import verify_password
 from app.crud.user import get_by_cpf, get_by_pis, get_by_email, create, update, delete
 from app.models.user import UserModel
 from app.schemas.user import UserResponse, UserCreate, UserUpdate
@@ -40,6 +41,10 @@ def update_user(user_id: int, user_update: UserUpdate, user_auth: UserModel = De
     """Update a user by id. One user cannot update another"""
     if user_id != user_auth.id:
         raise HTTPException(status_code=403, detail='Unauthorized to update other users')
+        
+    if not verify_password(user_update.oldPassword, user_auth.password):
+        raise HTTPException(status_code=400, detail='Invalid password. Try again.')
+
     return update(db, user_auth, user_update)
 
 

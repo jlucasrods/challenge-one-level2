@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 from pydantic import BaseModel, EmailStr, validator
 from validate_docbr import CPF, PIS
@@ -50,8 +51,9 @@ class UserCreate(UserBase):
     password: str
 
 
-class UserUpdate(UserCreate):
-    pass
+class UserUpdate(UserBase):
+    oldPassword: str
+    newPassword: Optional[str] = None
 
 
 class UserResponse(UserBase):
