@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Widget from '../components/widget';
 import Form from '../components/form';
@@ -10,6 +10,8 @@ export default function AccountDetailsPage() {
   const [alert, setAlert] = useState();
   const history = useHistory();
   const [user, setUser] = useState();
+  const oldPasswordRef = useRef();
+  const newPasswordRef = useRef();
 
   useEffect(() => {
     getCurrentUser().then(response => {
@@ -40,7 +42,7 @@ export default function AccountDetailsPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setAlert(null);
-    console.log(serializeForm(e.target));
+
     const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/users/${getClaims().sub}`, {
       method: 'PUT',
       headers: getAuthorizationHeader(),
@@ -52,6 +54,9 @@ export default function AccountDetailsPage() {
     if(response.status !== 200) {
       setAlert(extractRequestErrorMsg(body));
     }
+      
+    oldPasswordRef.current.value = '';
+    newPasswordRef.current.value = '';
   }
 
   return (
@@ -79,7 +84,8 @@ export default function AccountDetailsPage() {
                   numericOnly: true,
                 }}
               />
-              <Form.Input type="password" name="password" placeholder="Senha" autocomplete="off" required  />
+              <Form.Input type="password" name="oldPassword" placeholder="Senha atual" required  ref={oldPasswordRef} />
+              <Form.Input type="password" name="newPassword" placeholder="Nova senha (opcional)" ref={newPasswordRef} />
             </Form.Column>
             <Form.Column>
               <Form.Input type="text" name="address.country" placeholder="País" required defaultValue={user.address.country} />
