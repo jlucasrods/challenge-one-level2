@@ -1,6 +1,7 @@
 # Challenge one
 
-## Running in containers
+## Docker
+### Running in containers
 * Set up the environment variables. Follow `.env.example` in the directories as an example
 * Run `docker-compose up`
 
