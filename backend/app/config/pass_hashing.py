@@ -1,12 +1,8 @@
 import bcrypt
 
 
-def salt() -> bytes:
-    return bcrypt.gensalt()
-
-
 def hash_password(password: str) -> str:
-    return bcrypt.hashpw(password.encode(), salt()).decode()
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
