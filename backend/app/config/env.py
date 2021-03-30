@@ -1,5 +1,8 @@
 import os
+import sys
 from typing import List
+
+PYTEST_RUNNING = True if "pytest" in sys.modules else False
 
 DB_URL: str = os.getenv('DB_URL')
 if not DB_URL:
